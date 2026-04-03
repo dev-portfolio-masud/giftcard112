@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerLaunch - Job Application Platform</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&amp;family=Playfair+Display:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+html{scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;overflow-x:hidden}
+.font-display{font-family:'Playfair Display',serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes countUp{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(37,99,235,.5),0 0 40px rgba(59,130,246,.3),inset 0 0 20px rgba(59,130,246,.1)}50%{box-shadow:0 0 30px rgba(37,99,235,.8),0 0 60px rgba(59,130,246,.5),inset 0 0 30px rgba(59,130,246,.2)}}
+@keyframes glow-button{0%,100%{box-shadow:0 0 15px rgba(37,99,235,.6)}50%{box-shadow:0 0 25px rgba(37,99,235,.9)}}
+@keyframes glow-text{0%,100%{text-shadow:0 0 10px rgba(37,99,235,.4),0 0 20px rgba(59,130,246,.3)}50%{text-shadow:0 0 15px rgba(37,99,235,.8),0 0 30px rgba(59,130,246,.6)}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes blurIn{from{opacity:0;filter:blur(10px)}to{opacity:1;filter:blur(0)}}
+.scroll-in{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}
+.scroll-in.visible{opacity:1;transform:translateY(0)}
+.scroll-in-left{opacity:0;transform:translateX(-50px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}
+.scroll-in-left.visible{opacity:1;transform:translateX(0)}
+.scroll-in-right{opacity:0;transform:translateX(50px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}
+.scroll-in-right.visible{opacity:1;transform:translateX(0)}
+.scroll-in-scale{opacity:0;transform:scale(.9);transition:all .8s cubic-bezier(.25,.46,.45,.94)}
+.scroll-in-scale.visible{opacity:1;transform:scale(1)}
+.anim-fade-up{animation:fadeUp .7s ease both}
+.anim-delay-1{animation-delay:.1s}
+.anim-delay-2{animation-delay:.2s}
+.anim-delay-3{animation-delay:.3s}
+.anim-delay-4{animation-delay:.4s}
+.anim-delay-5{animation-delay:.5s}
+.anim-float{animation:float 3s ease-in-out infinite}
+.glow-card{animation:glow 3s ease-in-out infinite}
+.glow-button{animation:glow-button 2s ease-in-out infinite}
+.glow-text{animation:glow-text 2.5s ease-in-out infinite}
+.stat-card{animation:countUp .6s ease both}
+.review-card{transition:all .35s cubic-bezier(.4,0,.2,1)}
+.review-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.12)}
+.btn-primary{transition:all .3s ease;position:relative;overflow:hidden}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,99,235,.4)}
+.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.2),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-primary:hover::after{transform:translateX(100%)}
+.btn-secondary{transition:all .3s ease}
+.btn-secondary:hover{transform:translateY(-2px);background:rgba(255,255,255,.15)}
+.nav-link{position:relative;transition:all .3s ease}
+.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:#2563eb;transition:width .3s}
+.nav-link:hover::after{width:100%}
+.nav-link:hover{color:#fff;transform:translateY(-2px)}
+.form-input{transition:all .3s ease}
+.form-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15);transform:scale(1.02)}
+.feature-card{transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+.feature-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 25px 50px rgba(37,99,235,.15)}
+.job-card{transition:all .35s cubic-bezier(.4,0,.2,1)}
+.job-card:hover{transform:translateY(-4px);border-color:#2563eb;box-shadow:0 15px 40px rgba(37,99,235,.12)}
+.job-card:hover h3{color:#2563eb}
+.review-card{transition:all .35s cubic-bezier(.4,0,.2,1)}
+.review-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.12)}
+.stat-card:hover{transform:scale(1.05);box-shadow:0 20px 50px rgba(37,99,235,.2)}
+.partner-logo{transition:all .3s ease;opacity:.7}
+.partner-logo:hover{opacity:1;transform:scale(1.1)}
+a:not(.btn-primary):not(.btn-secondary):hover{transition:color .3s ease}
+.social-icon{transition:all .3s ease}
+.social-icon:hover{transform:translateY(-3px) scale(1.15);box-shadow:0 8px 20px rgba(37,99,235,.3)}
+.footer-link:hover{transform:translateX(4px)}
+.icon-hover{transition:transform .3s ease}
+.icon-hover:hover{transform:rotate(12deg) scale(1.2)}
+.gradient-text{background:linear-gradient(135deg,#1e40af,#3b82f6,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-bg{background:linear-gradient(135deg,#0f172a 0%,#1e293b 40%,#1e3a5f 100%);position:relative}
+.hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(59,130,246,.15),transparent 60%),radial-gradient(circle at 20% 80%,rgba(99,102,241,.1),transparent 50%)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.glass{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1)}
+.toast{animation:fadeUp .4s ease both}
+.comment-item{animation:slideIn .4s ease both}
+.partner-scroll{animation:shimmer 3s linear infinite;background-size:200% 100%}
+</style>
+  <script>
+tailwind.config={theme:{extend:{colors:{brand:{50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#0f172a'}}}}}
+</script>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full">
+  <div id="app-root" class="w-full h-full overflow-auto" style="background:#ffffff"><!-- Toast container -->
+   <div id="toast-container" class="fixed top-4 right-4 z-[100] flex flex-col gap-2"></div><!-- Sticky Header -->
+   <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300" style="background:rgba(15,23,42,.95);backdrop-filter:blur(12px)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex items-center justify-between h-16 lg:h-18"><a href="#home" class="flex items-center gap-2">
+       <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#2563eb,#60a5fa)"><i data-lucide="rocket" style="width:20px;height:20px;color:#fff"></i>
+       </div><span class="text-white font-bold text-xl tracking-tight">Career<span class="text-blue-400">Launch</span></span> </a>
+      <nav class="hidden lg:flex items-center gap-8"><a href="#home" class="nav-link text-gray-300 hover:text-white text-sm font-medium">Home</a> <a href="#jobs" class="nav-link text-gray-300 hover:text-white text-sm font-medium">Jobs</a> <a href="#about" class="nav-link text-gray-300 hover:text-white text-sm font-medium">About Us</a> <a href="#reviews" class="nav-link text-gray-300 hover:text-white text-sm font-medium">Reviews</a> <a href="#apply" class="nav-link text-gray-300 hover:text-white text-sm font-medium">Apply</a> <a href="#contact" class="nav-link text-gray-300 hover:text-white text-sm font-medium">Contact</a>
+      </nav>
+      <div class="flex items-center gap-3"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-white text-sm font-semibold" style="background:linear-gradient(135deg,#2563eb,#3b82f6)"> <i data-lucide="send" style="width:16px;height:16px"></i> <span class="hidden sm:inline">Apply Now</span> </a> <button id="mobile-menu-btn" class="lg:hidden text-white p-2"> <i data-lucide="menu" style="width:24px;height:24px"></i> </button>
+      </div>
+     </div>
+    </div><!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-white/10">
+     <div class="px-4 py-4 flex flex-col gap-3"><a href="#home" class="text-gray-300 hover:text-white text-sm font-medium py-2">Home</a> <a href="#jobs" class="text-gray-300 hover:text-white text-sm font-medium py-2">Jobs</a> <a href="#about" class="text-gray-300 hover:text-white text-sm font-medium py-2">About Us</a> <a href="#reviews" class="text-gray-300 hover:text-white text-sm font-medium py-2">Reviews</a> <a href="#apply" class="text-gray-300 hover:text-white text-sm font-medium py-2">Apply</a> <a href="#contact" class="text-gray-300 hover:text-white text-sm font-medium py-2">Contact</a>
+     </div>
+    </div>
+   </header><!-- Hero Section -->
+   <section id="home" class="hero-bg relative" style="padding-top:80px;min-height:600px">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+     <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+       <div class="anim-fade-up inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-blue-300 text-xs font-semibold mb-6" style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3)"><i data-lucide="trending-up" style="width:14px;height:14px"></i> #1 Job Placement Platform
+       </div>
+       <h1 id="hero-title" class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight anim-fade-up anim-delay-1 glow-text">Start Your Dream Career Today</h1>
+       <p id="hero-subtitle" class="mt-5 text-lg text-gray-400 leading-relaxed max-w-lg anim-fade-up anim-delay-2">Apply for top job opportunities with trusted companies worldwide. Your next career move starts here.</p>
+       <div class="mt-8 flex flex-wrap gap-4 anim-fade-up anim-delay-3"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="btn-primary glow-button inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-semibold" style="background:linear-gradient(135deg,#2563eb,#3b82f6)"> <i data-lucide="file-text" style="width:18px;height:18px"></i> Apply Now </a> <a href="#jobs" class="btn-secondary inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-semibold border border-white/20 hover:border-white/40"> <i data-lucide="search" style="width:18px;height:18px"></i> Browse Jobs </a>
+       </div>
+       <div class="mt-10 flex items-center gap-6 anim-fade-up anim-delay-4">
+        <div class="flex -space-x-3">
+         <div class="w-10 h-10 rounded-full border-2 border-slate-900 flex items-center justify-center text-xs font-bold" style="background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff">
+          JD
+         </div>
+         <div class="w-10 h-10 rounded-full border-2 border-slate-900 flex items-center justify-center text-xs font-bold" style="background:linear-gradient(135deg,#ec4899,#f43f5e);color:#fff">
+          SM
+         </div>
+         <div class="w-10 h-10 rounded-full border-2 border-slate-900 flex items-center justify-center text-xs font-bold" style="background:linear-gradient(135deg,#10b981,#14b8a6);color:#fff">
+          AK
+         </div>
+         <div class="w-10 h-10 rounded-full border-2 border-slate-900 flex items-center justify-center text-xs font-bold" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff">
+          RL
+         </div>
+        </div>
+        <div>
+         <div class="flex gap-0.5"><i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:14px;height:14px;color:#f59e0b;fill:#f59e0b"></i>
+         </div>
+         <p class="text-gray-500 text-xs mt-1">Trusted by 10,000+ professionals</p>
+        </div>
+       </div>
+      </div>
+      <div class="hidden lg:block anim-fade-up anim-delay-3">
+       <div class="relative">
+        <div class="glass rounded-2xl p-8 anim-float glow-card">
+         <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#2563eb,#60a5fa)"><i data-lucide="briefcase" style="width:24px;height:24px;color:#fff"></i>
+          </div>
+          <div>
+           <p class="text-white font-semibold">New Opportunities</p>
+           <p class="text-gray-400 text-sm">247 jobs added today</p>
+          </div>
+         </div>
+         <div class="space-y-3">
+          <div class="flex items-center justify-between p-3 rounded-lg" style="background:rgba(255,255,255,.05)">
+           <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#10b981;color:#fff">
+             G
+            </div>
+            <div>
+             <p class="text-white text-sm font-medium">Senior Developer</p>
+             <p class="text-gray-500 text-xs">Google • Remote</p>
+            </div>
+           </div><span class="text-green-400 text-xs font-medium px-2 py-1 rounded" style="background:rgba(16,185,129,.15)">New</span>
+          </div>
+          <div class="flex items-center justify-between p-3 rounded-lg" style="background:rgba(255,255,255,.05)">
+           <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#3b82f6;color:#fff">
+             M
+            </div>
+            <div>
+             <p class="text-white text-sm font-medium">Product Manager</p>
+             <p class="text-gray-500 text-xs">Meta • Hybrid</p>
+            </div>
+           </div><span class="text-blue-400 text-xs font-medium px-2 py-1 rounded" style="background:rgba(59,130,246,.15)">Hot</span>
+          </div>
+          <div class="flex items-center justify-between p-3 rounded-lg" style="background:rgba(255,255,255,.05)">
+           <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold" style="background:#f59e0b;color:#fff">
+             A
+            </div>
+            <div>
+             <p class="text-white text-sm font-medium">UX Designer</p>
+             <p class="text-gray-500 text-xs">Amazon • On-site</p>
+            </div>
+           </div><span class="text-yellow-400 text-xs font-medium px-2 py-1 rounded" style="background:rgba(245,158,11,.15)">Featured</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Stats Section -->
+   <section id="stats" class="relative -mt-8 z-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="stat-card bg-white rounded-2xl p-6 text-center shadow-lg shadow-blue-500/5 border border-gray-100 glow-card">
+       <div class="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3" style="background:linear-gradient(135deg,#eff6ff,#dbeafe)"><i data-lucide="file-text" style="width:24px;height:24px;color:#2563eb"></i>
+       </div>
+       <p id="stat-applications" class="text-2xl sm:text-3xl font-bold text-gray-900">10,000+</p>
+       <p class="text-gray-500 text-sm mt-1">Applications Submitted</p>
+      </div>
+      <div class="stat-card anim-delay-1 bg-white rounded-2xl p-6 text-center shadow-lg shadow-blue-500/5 border border-gray-100 glow-card">
+       <div class="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7)"><i data-lucide="check-circle" style="width:24px;height:24px;color:#16a34a"></i>
+       </div>
+       <p id="stat-jobs" class="text-2xl sm:text-3xl font-bold text-gray-900">2,500+</p>
+       <p class="text-gray-500 text-sm mt-1">Jobs Filled</p>
+      </div>
+      <div class="stat-card anim-delay-2 bg-white rounded-2xl p-6 text-center shadow-lg shadow-blue-500/5 border border-gray-100 glow-card">
+       <div class="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff)"><i data-lucide="users" style="width:24px;height:24px;color:#9333ea"></i>
+       </div>
+       <p id="stat-users" class="text-2xl sm:text-3xl font-bold text-gray-900">5,000+</p>
+       <p class="text-gray-500 text-sm mt-1">Active Users</p>
+      </div>
+      <div class="stat-card anim-delay-3 bg-white rounded-2xl p-6 text-center shadow-lg shadow-blue-500/5 border border-gray-100 glow-card">
+       <div class="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3" style="background:linear-gradient(135deg,#fff7ed,#ffedd5)"><i data-lucide="building" style="width:24px;height:24px;color:#ea580c"></i>
+       </div>
+       <p id="stat-partners" class="text-2xl sm:text-3xl font-bold text-gray-900">120+</p>
+       <p class="text-gray-500 text-sm mt-1">Partner Companies</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Why Choose Us -->
+   <section id="about" class="py-20 lg:py-28" style="background:#f8fafc">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center max-w-2xl mx-auto mb-14">
+      <p class="text-blue-600 font-semibold text-sm tracking-wider uppercase mb-3">Why Choose Us</p>
+      <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-900">Your Career, Our Priority</h2>
+      <p class="mt-4 text-gray-500 leading-relaxed">We connect talented professionals with top-tier companies, making your job search seamless and successful.</p>
+     </div>
+     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 glow-card">
+       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 icon-hover" style="background:linear-gradient(135deg,#2563eb,#3b82f6)"><i data-lucide="shield-check" style="width:28px;height:28px;color:#fff"></i>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900 mb-2">Verified Employers</h3>
+       <p class="text-gray-500 leading-relaxed">Every company on our platform is thoroughly vetted to ensure legitimate, quality opportunities.</p>
+      </div>
+      <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 glow-card">
+       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 icon-hover" style="background:linear-gradient(135deg,#10b981,#14b8a6)"><i data-lucide="zap" style="width:28px;height:28px;color:#fff"></i>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900 mb-2">Fast Placement</h3>
+       <p class="text-gray-500 leading-relaxed">Our streamlined process gets you from application to interview in record time.</p>
+      </div>
+      <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 glow-card">
+       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 icon-hover" style="background:linear-gradient(135deg,#f59e0b,#f97316)"><i data-lucide="heart" style="width:28px;height:28px;color:#fff"></i>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900 mb-2">Career Support</h3>
+       <p class="text-gray-500 leading-relaxed">Get personalized guidance from our career advisors throughout your journey.</p>
+      </div>
+      <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 glow-card">
+       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 icon-hover" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)"><i data-lucide="globe" style="width:28px;height:28px;color:#fff"></i>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900 mb-2">Global Reach</h3>
+       <p class="text-gray-500 leading-relaxed">Access opportunities from 50+ countries with both remote and on-site positions.</p>
+      </div>
+      <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 glow-card">
+       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 icon-hover" style="background:linear-gradient(135deg,#ec4899,#f43f5e)"><i data-lucide="target" style="width:28px;height:28px;color:#fff"></i>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900 mb-2">Smart Matching</h3>
+       <p class="text-gray-500 leading-relaxed">Our AI-powered system matches your skills with the perfect job opportunities.</p>
+      </div>
+      <div class="feature-card bg-white rounded-2xl p-8 border border-gray-100 glow-card">
+       <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 icon-hover" style="background:linear-gradient(135deg,#0ea5e9,#06b6d4)"><i data-lucide="lock" style="width:28px;height:28px;color:#fff"></i>
+       </div>
+       <h3 class="text-xl font-bold text-gray-900 mb-2">Secure &amp; Private</h3>
+       <p class="text-gray-500 leading-relaxed">Your data is encrypted and never shared without your explicit consent.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Jobs Section -->
+   <section id="jobs" class="py-20 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center max-w-2xl mx-auto mb-14">
+      <p class="text-blue-600 font-semibold text-sm tracking-wider uppercase mb-3">Featured Positions</p>
+      <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-900">Hot Job Openings</h2>
+      <p class="mt-4 text-gray-500">Explore the latest opportunities from our partner companies.</p>
+     </div>
+     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="job-card border border-gray-200 rounded-2xl p-6 group">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold" style="background:#4285f4;color:#fff">
+         G
+        </div>
+        <div>
+         <p class="font-bold text-gray-900">Google</p>
+         <p class="text-gray-500 text-sm">Mountain View, CA</p>
+        </div>
+       </div>
+       <h3 class="font-bold text-lg text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Senior Software Engineer</h3>
+       <p class="text-gray-500 text-sm mb-4">Build scalable systems for billions of users worldwide.</p>
+       <div class="flex flex-wrap gap-4 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-600">Full-time</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-50 text-green-600">Remote</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-600">$180k+</span>
+       </div><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">Apply Now <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+      </div>
+      <div class="job-card border border-gray-200 rounded-2xl p-6 group">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold" style="background:#1877f2;color:#fff">
+         M
+        </div>
+        <div>
+         <p class="font-bold text-gray-900">Meta</p>
+         <p class="text-gray-500 text-sm">Menlo Park, CA</p>
+        </div>
+       </div>
+       <h3 class="font-bold text-lg text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Product Designer</h3>
+       <p class="text-gray-500 text-sm mb-4">Design the future of social connectivity and VR experiences.</p>
+       <div class="flex flex-wrap gap-4 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-600">Full-time</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-yellow-50 text-yellow-600">Hybrid</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-600">$150k+</span>
+       </div><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">Apply Now <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+      </div>
+      <div class="job-card border border-gray-200 rounded-2xl p-6 group">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold" style="background:#ff9900;color:#fff">
+         A
+        </div>
+        <div>
+         <p class="font-bold text-gray-900">Amazon</p>
+         <p class="text-gray-500 text-sm">Seattle, WA</p>
+        </div>
+       </div>
+       <h3 class="font-bold text-lg text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">Data Scientist</h3>
+       <p class="text-gray-500 text-sm mb-4">Drive innovation through data analysis and machine learning.</p>
+       <div class="flex flex-wrap gap-4 mb-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-600">Full-time</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-50 text-green-600">Remote</span> <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-600">$160k+</span>
+       </div><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">Apply Now <i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+      </div>
+     </div>
+    </div>
+   </section><!-- Reviews Section -->
+   <section id="reviews" class="py-20 lg:py-28" style="background:#f8fafc">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center max-w-2xl mx-auto mb-14">
+      <p class="text-blue-600 font-semibold text-sm tracking-wider uppercase mb-3">Testimonials</p>
+      <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-900">Success Stories</h2>
+      <p class="mt-4 text-gray-500">Hear from professionals who found their dream jobs through CareerLaunch.</p>
+     </div>
+     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="review-card bg-white rounded-2xl p-8 border border-gray-100 glow-card">
+       <div class="flex gap-1 mb-4"><i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i>
+       </div>
+       <p class="text-gray-600 leading-relaxed mb-6">"CareerLaunch helped me land my dream role at a Fortune 500 company. The process was incredibly smooth and the team was supportive throughout."</p>
+       <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold" style="background:linear-gradient(135deg,#2563eb,#60a5fa);color:#fff">
+         JD
+        </div>
+        <div>
+         <p class="font-semibold text-gray-900">James Donovan</p>
+         <p class="text-gray-500 text-sm">Senior Developer at Google</p>
+        </div>
+       </div>
+      </div>
+      <div class="review-card bg-white rounded-2xl p-8 border border-gray-100">
+       <div class="flex gap-1 mb-4"><i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i>
+       </div>
+       <p class="text-gray-600 leading-relaxed mb-6">"Within two weeks of applying, I had three interview calls. The AI matching system really understands what you're looking for. Highly recommended!"</p>
+       <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold" style="background:linear-gradient(135deg,#ec4899,#f43f5e);color:#fff">
+         SM
+        </div>
+        <div>
+         <p class="font-semibold text-gray-900">Sarah Mitchell</p>
+         <p class="text-gray-500 text-sm">Product Manager at Spotify</p>
+        </div>
+       </div>
+      </div>
+      <div class="review-card bg-white rounded-2xl p-8 border border-gray-100">
+       <div class="flex gap-1 mb-4"><i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i>
+       </div>
+       <p class="text-gray-600 leading-relaxed mb-6">"Transitioning from teaching to tech felt impossible until I found CareerLaunch. They matched me with a bootcamp AND a job. Life-changing platform."</p>
+       <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold" style="background:linear-gradient(135deg,#10b981,#14b8a6);color:#fff">
+         AK
+        </div>
+        <div>
+         <p class="font-semibold text-gray-900">Aisha Khan</p>
+         <p class="text-gray-500 text-sm">UX Researcher at Meta</p>
+        </div>
+       </div>
+      </div>
+      <div class="review-card bg-white rounded-2xl p-8 border border-gray-100 sm:col-span-2 lg:col-span-1">
+       <div class="flex gap-1 mb-4"><i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i>
+       </div>
+       <p class="text-gray-600 leading-relaxed mb-6">"The career support team gave me invaluable advice on my resume and interview skills. I got promoted within 6 months of starting my new position!"</p>
+       <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold" style="background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff">
+         RL
+        </div>
+        <div>
+         <p class="font-semibold text-gray-900">Roberto Luna</p>
+         <p class="text-gray-500 text-sm">Engineering Lead at Tesla</p>
+        </div>
+       </div>
+      </div>
+      <div class="review-card bg-white rounded-2xl p-8 border border-gray-100 hidden lg:block lg:col-span-2">
+       <div class="flex gap-1 mb-4"><i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i> <i data-lucide="star" style="width:16px;height:16px;color:#f59e0b;fill:#f59e0b"></i>
+       </div>
+       <p class="text-gray-600 leading-relaxed mb-6">"As a hiring manager, I've found exceptional talent through CareerLaunch. The quality of applicants is outstanding and the platform is incredibly easy to use on both sides."</p>
+       <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff">
+         EP
+        </div>
+        <div>
+         <p class="font-semibold text-gray-900">Elena Park</p>
+         <p class="text-gray-500 text-sm">VP of Engineering at Stripe</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Application Form -->
+   <section id="apply" class="py-20 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid lg:grid-cols-2 gap-12 items-start">
+      <div>
+       <p class="text-blue-600 font-semibold text-sm tracking-wider uppercase mb-3">Apply Now</p>
+       <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Take the First Step</h2>
+       <p class="text-gray-500 leading-relaxed mb-8">Fill out the form and our team will match you with the best opportunities. Most applicants hear back within 48 hours.</p>
+       <div class="space-y-4">
+        <div class="flex items-center gap-4 p-4 rounded-xl" style="background:#f8fafc">
+         <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#dbeafe">
+          <i data-lucide="clock" style="width:20px;height:20px;color:#2563eb"></i>
+         </div>
+         <div>
+          <p class="font-semibold text-gray-900 text-sm">Quick Response</p>
+          <p class="text-gray-500 text-xs">Average response within 48 hours</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl" style="background:#f8fafc">
+         <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#dcfce7">
+          <i data-lucide="shield" style="width:20px;height:20px;color:#16a34a"></i>
+         </div>
+         <div>
+          <p class="font-semibold text-gray-900 text-sm">100% Secure</p>
+          <p class="text-gray-500 text-xs">Your information is encrypted and private</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-4 p-4 rounded-xl" style="background:#f8fafc">
+         <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#fae8ff">
+          <i data-lucide="sparkles" style="width:20px;height:20px;color:#9333ea"></i>
+         </div>
+         <div>
+          <p class="font-semibold text-gray-900 text-sm">Free to Apply</p>
+          <p class="text-gray-500 text-xs">No hidden fees, ever</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div>
+       <form id="application-form" class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg">
+        <div class="space-y-5">
+         <div><label for="full-name" class="block text-sm font-semibold text-gray-700 mb-1.5">Full Name</label> <input type="text" id="full-name" required class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 text-sm outline-none" placeholder="John Doe">
+         </div>
+         <div class="grid sm:grid-cols-2 gap-4">
+          <div><label for="email" class="block text-sm font-semibold text-gray-700 mb-1.5">Email Address</label> <input type="email" id="email" required class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 text-sm outline-none" placeholder="john@example.com">
+          </div>
+          <div><label for="phone" class="block text-sm font-semibold text-gray-700 mb-1.5">Phone Number</label> <input type="tel" id="phone" class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 text-sm outline-none" placeholder="+1 (555) 000-0000">
+          </div>
+         </div>
+         <div><label for="position" class="block text-sm font-semibold text-gray-700 mb-1.5">Desired Position</label> <select id="position" required class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 text-sm outline-none bg-white"> <option value="">Select a position...</option> <option>Software Engineer</option> <option>Product Designer</option> <option>Product Manager</option> <option>Data Scientist</option> <option>Marketing Manager</option> <option>UX Researcher</option> <option>DevOps Engineer</option> <option>Other</option> </select>
+         </div>
+         <div><label for="message" class="block text-sm font-semibold text-gray-700 mb-1.5">Cover Message</label> <textarea id="message" rows="4" class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 text-sm outline-none resize-none" placeholder="Tell us about yourself and what you're looking for..."></textarea>
+         </div><button type="submit" id="submit-btn" class="btn-primary w-full py-3.5 rounded-xl text-white font-semibold flex items-center justify-center gap-2" style="background:linear-gradient(135deg,#2563eb,#3b82f6)"> <i data-lucide="send" style="width:18px;height:18px"></i> <span id="submit-text">Submit Application</span> </button>
+        </div>
+        <p class="mt-4 text-center text-xs text-gray-400 flex items-center justify-center gap-1"><i data-lucide="lock" style="width:12px;height:12px"></i> Your data is secure and will never be shared with third parties.</p>
+       </form>
+      </div>
+     </div>
+    </div>
+   </section><!-- Comments Section -->
+   <section id="comments" class="py-20 lg:py-28" style="background:#f8fafc">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-14">
+      <p class="text-blue-600 font-semibold text-sm tracking-wider uppercase mb-3">Community</p>
+      <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-900">Join the Discussion</h2>
+      <p class="mt-4 text-gray-500">Share your experience or ask questions about job opportunities.</p>
+     </div>
+     <form id="comment-form" class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm mb-8">
+      <div class="flex flex-col sm:flex-row gap-4 mb-4">
+       <div class="flex-1"><label for="comment-name" class="sr-only">Your Name</label> <input type="text" id="comment-name" required class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 text-sm outline-none" placeholder="Your Name">
+       </div>
+      </div>
+      <div class="mb-4"><label for="comment-message" class="sr-only">Your Message</label> <textarea id="comment-message" rows="3" required class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 text-sm outline-none resize-none" placeholder="Write your comment..."></textarea>
+      </div><button type="submit" id="comment-btn" class="btn-primary px-6 py-2.5 rounded-xl text-white font-semibold text-sm flex items-center gap-2" style="background:linear-gradient(135deg,#2563eb,#3b82f6)"> <i data-lucide="message-circle" style="width:16px;height:16px"></i> <span id="comment-btn-text">Post Comment</span> </button>
+     </form>
+     <div id="comments-list" class="space-y-4">
+      <p id="no-comments" class="text-center text-gray-400 py-8">No comments yet. Be the first to share your thoughts!</p>
+     </div>
+    </div>
+   </section><!-- Partners -->
+   <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <p class="text-center text-gray-400 text-sm font-medium tracking-wider uppercase mb-10">Trusted by Leading Companies</p>
+     <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-12 lg:gap-16">
+      <div class="partner-logo text-2xl font-bold text-gray-300">
+       Google
+      </div>
+      <div class="partner-logo text-2xl font-bold text-gray-300">
+       Meta
+      </div>
+      <div class="partner-logo text-2xl font-bold text-gray-300">
+       Amazon
+      </div>
+      <div class="partner-logo text-2xl font-bold text-gray-300">
+       Tesla
+      </div>
+      <div class="partner-logo text-2xl font-bold text-gray-300">
+       Stripe
+      </div>
+      <div class="partner-logo text-2xl font-bold text-gray-300">
+       Spotify
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer id="contact" class="py-16" style="background:#0f172a">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <div>
+       <div class="flex items-center gap-2 mb-5">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#2563eb,#60a5fa)"><i data-lucide="rocket" style="width:20px;height:20px;color:#fff"></i>
+        </div><span class="text-white font-bold text-xl">Career<span class="text-blue-400">Launch</span></span>
+       </div>
+       <p class="text-gray-400 text-sm leading-relaxed">Connecting talent with opportunity. Your dream career is just one click away.</p>
+       <div class="flex gap-3 mt-5"><a href="#" class="social-icon w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white" style="background:rgba(255,255,255,.05)"><i data-lucide="twitter" style="width:16px;height:16px"></i></a> <a href="#" class="social-icon w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white" style="background:rgba(255,255,255,.05)"><i data-lucide="linkedin" style="width:16px;height:16px"></i></a> <a href="#" class="social-icon w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white" style="background:rgba(255,255,255,.05)"><i data-lucide="facebook" style="width:16px;height:16px"></i></a> <a href="#" class="social-icon w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 hover:text-white" style="background:rgba(255,255,255,.05)"><i data-lucide="instagram" style="width:16px;height:16px"></i></a>
+       </div>
+      </div>
+      <div>
+       <h4 class="text-white font-semibold mb-5">Quick Links</h4>
+       <ul class="space-y-3">
+        <li><a href="#home" class="text-gray-400 hover:text-white text-sm transition-colors">Home</a></li>
+        <li><a href="#jobs" class="text-gray-400 hover:text-white text-sm transition-colors">Browse Jobs</a></li>
+        <li><a href="#about" class="text-gray-400 hover:text-white text-sm transition-colors">About Us</a></li>
+        <li><a href="#reviews" class="text-gray-400 hover:text-white text-sm transition-colors">Reviews</a></li>
+        <li><a href="#apply" class="text-gray-400 hover:text-white text-sm transition-colors">Apply Now</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="text-white font-semibold mb-5">Contact</h4>
+       <ul class="space-y-3">
+        <li class="flex items-center gap-2 text-gray-400 text-sm"><i data-lucide="mail" style="width:14px;height:14px"></i> hello@careerlaunch.com</li>
+        <li class="flex items-center gap-2 text-gray-400 text-sm"><i data-lucide="phone" style="width:14px;height:14px"></i> +1 (555) 123-4567</li>
+        <li class="flex items-center gap-2 text-gray-400 text-sm"><i data-lucide="map-pin" style="width:14px;height:14px"></i> San Francisco, CA</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="text-white font-semibold mb-5">Newsletter</h4>
+       <p class="text-gray-400 text-sm mb-4">Get the latest jobs delivered to your inbox weekly.</p>
+       <form id="newsletter-form" class="flex gap-2"><label for="newsletter-email" class="sr-only">Email for newsletter</label> <input type="email" id="newsletter-email" required class="flex-1 px-4 py-2.5 rounded-lg text-sm outline-none text-white border border-white/10 focus:border-blue-500 transition-colors" style="background:rgba(255,255,255,.05)" placeholder="your@email.com"> <button type="submit" class="btn-primary px-4 py-2.5 rounded-lg text-white text-sm font-semibold" style="background:linear-gradient(135deg,#2563eb,#3b82f6)"> <i data-lucide="send" style="width:16px;height:16px"></i> </button>
+       </form>
+       <p id="newsletter-msg" class="text-xs mt-2 hidden text-green-400"></p>
+      </div>
+     </div>
+     <div class="border-t border-white/10 pt-8 text-center">
+      <p id="footer-copyright" class="text-gray-500 text-sm">© 2025 CareerLaunch. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+// ===== Config & SDK Setup =====
+const defaultConfig = {
+  hero_title: 'Start Your Dream Career Today',
+  hero_subtitle: 'Apply for top job opportunities with trusted companies worldwide. Your next career move starts here.',
+  stat_applications: '10,000+',
+  stat_jobs: '2,500+',
+  stat_users: '5,000+',
+  stat_partners: '120+',
+  footer_text: '© 2025 CareerLaunch. All rights reserved.',
+  background_color: '#ffffff',
+  surface_color: '#f8fafc',
+  text_color: '#0f172a',
+  primary_action_color: '#2563eb',
+  secondary_action_color: '#3b82f6',
+  font_family: 'DM Sans',
+  font_size: 16
+};
+
+let allData = [];
+let currentRecordCount = 0;
+
+function showToast(msg, type = 'success') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg text-sm font-medium';
+  t.style.background = type === 'success' ? '#065f46' : '#991b1b';
+  t.style.color = '#fff';
+  t.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" style="width:18px;height:18px"></i>${msg}`;
+  c.appendChild(t);
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3000);
+}
+
+function renderComments(data) {
+  const comments = data.filter(d => d.type === 'comment');
+  const list = document.getElementById('comments-list');
+  const noComments = document.getElementById('no-comments');
+  const existingMap = new Map([...list.querySelectorAll('[data-id]')].map(el => [el.dataset.id, el]));
+
+  if (comments.length === 0) {
+    if (noComments) noComments.classList.remove('hidden');
+    existingMap.forEach(el => el.remove());
+    return;
+  }
+  if (noComments) noComments.classList.add('hidden');
+
+  const sorted = [...comments].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const newIds = new Set(sorted.map(c => c.__backendId));
+
+  existingMap.forEach((el, id) => { if (!newIds.has(id)) el.remove(); });
+
+  let prev = noComments;
+  sorted.forEach(c => {
+    const existing = existingMap.get(c.__backendId);
+    if (existing) {
+      existing.querySelector('.comment-name').textContent = c.name;
+      existing.querySelector('.comment-msg').textContent = c.message;
+      if (prev && prev.nextElementSibling !== existing) {
+        prev.after(existing);
+      }
+      prev = existing;
+    } else {
+      const initials = (c.name || 'A').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+      const colors = ['#2563eb','#10b981','#f59e0b','#ec4899','#8b5cf6','#0ea5e9'];
+      const color = colors[Math.abs([...c.name].reduce((a, ch) => a + ch.charCodeAt(0), 0)) % colors.length];
+      const d = new Date(c.timestamp);
+      const timeStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' at ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+      const div = document.createElement('div');
+      div.className = 'comment-item bg-white rounded-xl p-5 border border-gray-100';
+      div.dataset.id = c.__backendId;
+      div.innerHTML = `<div class="flex items-start gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold" style="background:${color};color:#fff">${initials}</div><div class="flex-1 min-w-0"><div class="flex items-center gap-2 mb-1"><p class="comment-name font-semibold text-gray-900 text-sm">${c.name}</p><span class="text-gray-400 text-xs">${timeStr}</span></div><p class="comment-msg text-gray-600 text-sm leading-relaxed">${c.message}</p></div></div>`;
+      if (prev) prev.after(div); else list.prepend(div);
+      prev = div;
+    }
+  });
+}
+
+// Data SDK
+const dataHandler = {
+  onDataChanged(data) {
+    allData = data;
+    currentRecordCount = data.length;
+    renderComments(data);
+  }
+};
+
+(async () => {
+  if (window.dataSdk) {
+    const r = await window.dataSdk.init(dataHandler);
+    if (!r.isOk) console.error('Data SDK init failed');
+  }
+})();
+
+// Element SDK
+if (window.elementSdk) {
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => {
+      const g = (k) => config[k] || defaultConfig[k];
+      const font = g('font_family');
+      const baseSize = g('font_size');
+      const baseFontStack = `${font}, 'DM Sans', sans-serif`;
+
+      document.getElementById('hero-title').textContent = g('hero_title');
+      document.getElementById('hero-subtitle').textContent = g('hero_subtitle');
+      document.getElementById('stat-applications').textContent = g('stat_applications');
+      document.getElementById('stat-jobs').textContent = g('stat_jobs');
+      document.getElementById('stat-users').textContent = g('stat_users');
+      document.getElementById('stat-partners').textContent = g('stat_partners');
+      document.getElementById('footer-copyright').textContent = g('footer_text');
+
+      document.body.style.fontFamily = baseFontStack;
+      document.querySelectorAll('.font-display').forEach(el => {
+        el.style.fontFamily = `'Playfair Display', ${baseFontStack}`;
+      });
+      document.body.style.fontSize = baseSize + 'px';
+
+      // Colors
+      const bg = g('background_color');
+      const surface = g('surface_color');
+      const text = g('text_color');
+      const primary = g('primary_action_color');
+      const secondary = g('secondary_action_color');
+
+      document.getElementById('app-root').style.background = bg;
+      document.querySelectorAll('.btn-primary').forEach(el => {
+        el.style.background = `linear-gradient(135deg,${primary},${secondary})`;
+      });
+    },
+    mapToCapabilities: (config) => {
+      const g = (k) => config[k] || defaultConfig[k];
+      const makeColor = (key) => ({
+        get: () => g(key),
+        set: (v) => { config[key] = v; window.elementSdk.setConfig({ [key]: v }); }
+      });
+      return {
+        recolorables: [
+          makeColor('background_color'),
+          makeColor('surface_color'),
+          makeColor('text_color'),
+          makeColor('primary_action_color'),
+          makeColor('secondary_action_color')
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => g('font_family'),
+          set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+        },
+        fontSizeable: {
+          get: () => g('font_size'),
+          set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+        }
+      };
+    },
+    mapToEditPanelValues: (config) => {
+      const g = (k) => config[k] || defaultConfig[k];
+      return new Map([
+        ['hero_title', g('hero_title')],
+        ['hero_subtitle', g('hero_subtitle')],
+        ['stat_applications', g('stat_applications')],
+        ['stat_jobs', g('stat_jobs')],
+        ['stat_users', g('stat_users')],
+        ['stat_partners', g('stat_partners')],
+        ['footer_text', g('footer_text')]
+      ]);
+    }
+  });
+}
+
+// ===== Forms =====
+document.getElementById('application-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  const btnText = document.getElementById('submit-text');
+  btn.disabled = true;
+  btnText.textContent = 'Submitting...';
+
+  if (currentRecordCount >= 999) {
+    showToast('Maximum submissions reached. Please try again later.', 'error');
+    btn.disabled = false;
+    btnText.textContent = 'Submit Application';
+    return;
+  }
+
+  const record = {
+    type: 'application',
+    name: document.getElementById('full-name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value || '',
+    position: document.getElementById('position').value,
+    message: document.getElementById('message').value || '',
+    timestamp: new Date().toISOString()
+  };
+
+  if (window.dataSdk) {
+    const r = await window.dataSdk.create(record);
+    if (r.isOk) {
+      showToast('Application submitted successfully!');
+      e.target.reset();
+    } else {
+      showToast('Something went wrong. Please try again.', 'error');
+    }
+  } else {
+    showToast('Application submitted successfully!');
+    e.target.reset();
+  }
+  btn.disabled = false;
+  btnText.textContent = 'Submit Application';
+});
+
+document.getElementById('comment-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('comment-btn');
+  const btnText = document.getElementById('comment-btn-text');
+  btn.disabled = true;
+  btnText.textContent = 'Posting...';
+
+  if (currentRecordCount >= 999) {
+    showToast('Comment limit reached.', 'error');
+    btn.disabled = false;
+    btnText.textContent = 'Post Comment';
+    return;
+  }
+
+  const record = {
+    type: 'comment',
+    name: document.getElementById('comment-name').value,
+    email: '',
+    phone: '',
+    position: '',
+    message: document.getElementById('comment-message').value,
+    timestamp: new Date().toISOString()
+  };
+
+  if (window.dataSdk) {
+    const r = await window.dataSdk.create(record);
+    if (r.isOk) {
+      showToast('Comment posted!');
+      e.target.reset();
+    } else {
+      showToast('Failed to post comment.', 'error');
+    }
+  }
+  btn.disabled = false;
+  btnText.textContent = 'Post Comment';
+});
+
+document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('newsletter-msg');
+  msg.textContent = '✓ Subscribed successfully!';
+  msg.classList.remove('hidden');
+  e.target.reset();
+  setTimeout(() => msg.classList.add('hidden'), 3000);
+});
+
+// Mobile menu
+document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+document.querySelectorAll('#mobile-menu a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'));
+});
+
+// Scroll animations
+function observeScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  // Apply scroll animation classes
+  document.querySelectorAll('section').forEach((section, idx) => {
+    if (idx > 0) {
+      section.querySelectorAll('h2, h3').forEach(h => h.classList.add('scroll-in'));
+      section.querySelectorAll('.stat-card, .review-card, [class*="border border"]').forEach((el, i) => {
+        el.classList.add(i % 2 === 0 ? 'scroll-in-left' : 'scroll-in-right');
+      });
+      section.querySelectorAll('.glass, .bg-white').forEach(el => {
+        if (!el.classList.contains('scroll-in-left') && !el.classList.contains('scroll-in-right')) {
+          el.classList.add('scroll-in-scale');
+        }
+      });
+    }
+  });
+
+  document.querySelectorAll('.scroll-in, .scroll-in-left, .scroll-in-right, .scroll-in-scale').forEach(el => observer.observe(el));
+}
+
+observeScrollAnimations();
+
+// Init Lucide
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e6547e0a3b8daeb',t:'MTc3NTE5MDAyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
